@@ -1,5 +1,5 @@
 header{
-    background-color: blue;
+    background-image: linear-gradient(to right, blue, navy);
     text-align: center;
     color: white;
 }
@@ -7,19 +7,52 @@ header{
 .formButton{
     width: 100%;
 }
+
 .formText{
     font-size:xx-large;
     font-weight: bold;
 }
+.area{
+    font-size:xx-large;
+    font-weight: bold;
+    padding-left: 3%;
+}
 .buttonBox{
-    display: flex;
     flex-direction: column;
     flex-wrap: wrap;
-    padding-top: 5%;
+
 }
 .buttonPadding{
     padding-top: 5%;
 }
-.moveRight{
-    padding-left: 1%;
+
+.weatherBox{
+    border: solid black;
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    flex-direction: column;
+    
+}
+.weatherInfo{
+    list-style: none
+}
+.fiveDayReport{
+    /* padding-left: 1%; */
+}
+.forecastCards{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin: auto;
+}
+
+.weatherCard{
+    border: solid black;
+    background-color: blue;
+    color: white;
+    width: 18%;
+    font-size: larger;
+
 }
