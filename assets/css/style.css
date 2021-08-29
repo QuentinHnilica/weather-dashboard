@@ -1,0 +1,25 @@
+header{
+    background-color: blue;
+    text-align: center;
+    color: white;
+}
+
+.formButton{
+    width: 100%;
+}
+.formText{
+    font-size:xx-large;
+    font-weight: bold;
+}
+.buttonBox{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    padding-top: 5%;
+}
+.buttonPadding{
+    padding-top: 5%;
+}
+.moveRight{
+    padding-left: 1%;
+}
