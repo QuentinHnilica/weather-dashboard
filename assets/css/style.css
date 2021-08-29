@@ -37,9 +37,6 @@ header{
 .weatherInfo{
     list-style: none
 }
-.fiveDayReport{
-    /* padding-left: 1%; */
-}
 .forecastCards{
     display: flex;
     flex-direction: row;
