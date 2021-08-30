@@ -1,33 +1,43 @@
 $(document).ready(function(){
-    //key 4JMyipUakmC7s7BuUj7FxmOzSoQDLRme
-    //full url api.openweathermap.org/data/2.5/forecast?q={city name}&appid={API key}
-    var locationUrl = 'https://dataservice.accuweather.com/locations/v1/cities/search?'
-    var startURL = 'http://dataservice.accuweather.com/forecasts/v1/daily/10day/'
-    var apiId = 'apikey=4JMyipUakmC7s7BuUj7FxmOzSoQDLRme'
+    //full url https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&appid={API key}
+    //myID eba6d54703d207f3af8bc307df016cab
+    var startURL = 'https://api.openweathermap.org/data/2.5/onecall?'
+    var apiId = '&appid=eba6d54703d207f3af8bc307df016cab'
+    var cities
+    var location
 
-    // console.log(startURL + 'Detroit'+ apiId)
-    // fetch('https://api.tomorrow.io/v4/timelines?location=-73.98529171943665,40.75872069597532&fields=temperature&timesteps=1h&units=metric&apikey=YcREa0xWOPvRaNXOWdvSuVNybl1HDLKK').then(function(response){
-    //     console.log(response)
-    //     response.json().then(function(data){
-    //         console.log(data)
-    //         //temp = data.main.temp
-    //         //humid = data.main.humidity
-    //         //wind = data.wind.speed
-    //     })
-    // })
+    fetch('./assets/json/cities.json')
+    .then(function (response) {
+        return response.json()
+    })
+    .then(function (data) {
+        cities = data
+    })
 
+    function findLat(obj){
+        return obj.name === location
+    }
 
-    // "http://dataservice.accuweather.com/locations/v1/cities/search?apikey=4JMyipUakmC7s7BuUj7FxmOzSoQDLRme&q=Detroit"
+    function displayWeather(info){
+        
+    }
+
     $('#submitForm').on('submit', function(event){
         event.preventDefault();
-        var location = $('.form-control').val()
-        console.log(location)
-        fetch(locationUrl + apiId + '&q=' + location
-            ,{ mode: 'no-cors'}).then(function(response){
-                console.log(response)
-                response.json().then(function(data){
-                console.log(data)
-            })
-        })
+        location = $('.form-control').val()
+        if (location != ''){
+            var locationObj = cities.find(findLat)
+            if (locationObj != null){
+                fetch(startURL + 'lat=' + locationObj.lat + '&lon=' + locationObj.lng + apiId)
+                    .then(function(response){
+                        response.json().then(function(data){
+                        displayWeather(data)
+                    })
+                })
+            } 
+            else{
+                //put error message
+            }
+        }     
     })
 })
