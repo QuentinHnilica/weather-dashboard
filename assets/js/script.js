@@ -8,6 +8,14 @@ $(document).ready(function(){
     var cityUrl = 'https://api.openweathermap.org/data/2.5/weather?q='
     var location
 
+    function cardInfo(card, info) {
+        card.children()[0].innerText = 'bruh'
+        //card.children()[1].innerText = 'bruh'
+        card.children()[2].innerText = 'Temp: ' + info.temp.day
+        card.children()[3].innerText = 'Wind: ' + info.wind_speed
+        card.children()[4].innerText = 'Humidity: ' + info.humidity
+    }
+
     function displayWeather(info){
         console.log(info)
         $('#temp').text('Current Temp: ' + info.current.temp)
@@ -17,9 +25,27 @@ $(document).ready(function(){
 
         console.log($('.forecastCards'))
         $('.forecastCards').children().each(function(i) {
-            console.log($(this))
-            for(var i = 0; i < $(this).children().length; i++){
-                console.log('yessir')
+            switch(i){
+                case 0:{
+                    cardInfo($(this), info.daily[i])
+                    return
+                }
+                case 1:{
+                    cardInfo($(this), info.daily[i])
+                    return
+                }
+                case 2:{
+                    cardInfo($(this), info.daily[i])
+                    return
+                }
+                case 3:{
+                    cardInfo($(this), info.daily[i])
+                    return
+                }
+                case 4:{
+                    cardInfo($(this), info.daily[i])
+                    return
+                }
             }
         });
     }
