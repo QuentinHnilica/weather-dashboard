@@ -1,7 +1,7 @@
 $(document).ready(function(){
     //key 4JMyipUakmC7s7BuUj7FxmOzSoQDLRme
     //full url api.openweathermap.org/data/2.5/forecast?q={city name}&appid={API key}
-    var locationUrl = 'http://dataservice.accuweather.com/locations/v1/cities/search?'
+    var locationUrl = 'https://dataservice.accuweather.com/locations/v1/cities/search?'
     var startURL = 'http://dataservice.accuweather.com/forecasts/v1/daily/10day/'
     var apiId = 'apikey=4JMyipUakmC7s7BuUj7FxmOzSoQDLRme'
 
