@@ -19,12 +19,19 @@ $(document).ready(function(){
     }
 
     function displayWeather(info){
-        
+        console.log(info)
+        $('#temp').text('Current Temp: ' + info.current.temp)
+        $('#wind').text('Wind Speed: ' + info.current.wind_speed)
+        $('#humid').text('Humidity: ' + info.current.humidity)
+        $('#uv').text('UV Index: ' + info.current.uvi)
+
+        console.log($('.forecastCards'))
+        $('.forecastCards').children.forEach(element => {
+            console.log("Bruh")
+        });
     }
 
-    $('#submitForm').on('submit', function(event){
-        event.preventDefault();
-        location = $('.form-control').val()
+    function getFetch(){
         if (location != ''){
             var locationObj = cities.find(findLat)
             if (locationObj != null){
@@ -38,6 +45,12 @@ $(document).ready(function(){
             else{
                 //put error message
             }
-        }     
+        }   
+    }
+
+    $('#submitForm').on('submit', function(event){
+        event.preventDefault();
+        location = $('.form-control').val()
+        getFetch()
     })
 })
