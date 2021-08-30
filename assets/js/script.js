@@ -1,22 +1,12 @@
 $(document).ready(function(){
     //full url https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&appid={API key}
     //myID eba6d54703d207f3af8bc307df016cab
+    // api.openweathermap.org/data/2.5/weather?q={city name}&appid={API key}
+
     var startURL = 'https://api.openweathermap.org/data/2.5/onecall?'
     var apiId = '&appid=eba6d54703d207f3af8bc307df016cab'
-    var cities
+    var cityUrl = 'https://api.openweathermap.org/data/2.5/weather?q='
     var location
-
-    fetch('./assets/json/cities.json')
-    .then(function (response) {
-        return response.json()
-    })
-    .then(function (data) {
-        cities = data
-    })
-
-    function findLat(obj){
-        return obj.name === location
-    }
 
     function displayWeather(info){
         console.log(info)
@@ -26,25 +16,38 @@ $(document).ready(function(){
         $('#uv').text('UV Index: ' + info.current.uvi)
 
         console.log($('.forecastCards'))
-        $('.forecastCards').children.forEach(element => {
-            console.log("Bruh")
+        $('.forecastCards').children().each(function(i) {
+            console.log($(this))
+            for(var i = 0; i < $(this).children().length; i++){
+                console.log('yessir')
+            }
         });
     }
 
     function getFetch(){
         if (location != ''){
-            var locationObj = cities.find(findLat)
-            if (locationObj != null){
-                fetch(startURL + 'lat=' + locationObj.lat + '&lon=' + locationObj.lng + apiId)
-                    .then(function(response){
-                        response.json().then(function(data){
-                        displayWeather(data)
-                    })
+            fetch(cityUrl + location + apiId).then(function(response){
+                response.json().then(function(data){
+                    locationObj = data.coord
+                    if (locationObj != null){
+                        fetch(startURL + 'lat=' + locationObj.lat + '&lon=' + locationObj.lon + apiId)
+                            .then(function(response){
+                                if (response.status === 404){
+                                    console.log('404Moment')
+                                }
+                                else{
+                                    response.json().then(function(data){
+                                        displayWeather(data)
+                                    })
+                                }
+                                
+                            })
+                    } 
+                    else{
+                        //put error message
+                    }
                 })
-            } 
-            else{
-                //put error message
-            }
+            })  
         }   
     }
 
