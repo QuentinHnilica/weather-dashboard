@@ -6,7 +6,7 @@ $(document).ready(function(){
     var startURL = 'https://api.openweathermap.org/data/2.5/onecall?'
     var apiId = '&appid=eba6d54703d207f3af8bc307df016cab'
     var cityUrl = 'https://api.openweathermap.org/data/2.5/weather?q='
-    var location
+    var location = 'San Diego'
 
     function cardInfo(card, info) {
         card.children()[0].innerText = 'bruh'
@@ -82,4 +82,11 @@ $(document).ready(function(){
         location = $('.form-control').val()
         getFetch()
     })
+
+    $('.formButton').on('click', function(event){
+        location = $(this)[0].innerText
+        getFetch()
+    })
+
+    getFetch()
 })
