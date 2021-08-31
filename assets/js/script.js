@@ -9,11 +9,13 @@ $(document).ready(function(){
     var location = 'San Diego'
     var date = new Date()
     var today = date.toDateString()
-    var week = date.getDate() +7
-    console.log(week)
+    var week = date.getDate()
+    var tomorrow
 
-    function cardInfo(card, info) {
-        card.children()[0].innerText = 'bruh' 
+    function cardInfo(card, info, nextDay) {
+        tomorrow = new Date(new Date().setDate(date.getDate() + nextDay))
+
+        card.children()[0].innerText = tomorrow.toDateString()
         //card.children()[1].innerText = 'bruh'
         card.children()[2].innerText = 'Temp: ' + info.temp.day
         card.children()[3].innerText = 'Wind: ' + info.wind_speed
@@ -32,23 +34,23 @@ $(document).ready(function(){
         $('.forecastCards').children().each(function(i) {
             switch(i){
                 case 0:{
-                    cardInfo($(this), info.daily[i])
+                    cardInfo($(this), info.daily[i], i+1)
                     return
                 }
                 case 1:{
-                    cardInfo($(this), info.daily[i])
+                    cardInfo($(this), info.daily[i], i+1)
                     return
                 }
                 case 2:{
-                    cardInfo($(this), info.daily[i])
+                    cardInfo($(this), info.daily[i], i+1)
                     return
                 }
                 case 3:{
-                    cardInfo($(this), info.daily[i])
+                    cardInfo($(this), info.daily[i], i+1)
                     return
                 }
                 case 4:{
-                    cardInfo($(this), info.daily[i])
+                    cardInfo($(this), info.daily[i], i+1)
                     return
                 }
             }
