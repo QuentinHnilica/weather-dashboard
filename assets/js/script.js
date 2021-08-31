@@ -7,9 +7,13 @@ $(document).ready(function(){
     var apiId = '&appid=eba6d54703d207f3af8bc307df016cab'
     var cityUrl = 'https://api.openweathermap.org/data/2.5/weather?q='
     var location = 'San Diego'
+    var date = new Date()
+    var today = date.toDateString()
+    var week = date.getDate() +7
+    console.log(week)
 
     function cardInfo(card, info) {
-        card.children()[0].innerText = 'bruh'
+        card.children()[0].innerText = 'bruh' 
         //card.children()[1].innerText = 'bruh'
         card.children()[2].innerText = 'Temp: ' + info.temp.day
         card.children()[3].innerText = 'Wind: ' + info.wind_speed
@@ -18,6 +22,7 @@ $(document).ready(function(){
 
     function displayWeather(info){
         console.log(info)
+        $('.area').text(location + ' : ' + today)
         $('#temp').text('Current Temp: ' + info.current.temp)
         $('#wind').text('Wind Speed: ' + info.current.wind_speed)
         $('#humid').text('Humidity: ' + info.current.humidity)
