@@ -1,8 +1,4 @@
 $(document).ready(function(){
-    //full url https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&appid={API key}
-    //myID eba6d54703d207f3af8bc307df016cab
-    // api.openweathermap.org/data/2.5/weather?q={city name}&appid={API key}
-
     var startURL = 'https://api.openweathermap.org/data/2.5/onecall?'
     var apiId = '&appid=eba6d54703d207f3af8bc307df016cab'
     var cityUrl = 'https://api.openweathermap.org/data/2.5/weather?q='
@@ -70,7 +66,8 @@ $(document).ready(function(){
                         fetch(startURL + 'lat=' + locationObj.lat + '&lon=' + locationObj.lon + apiId)
                             .then(function(response){
                                 if (response.status === 404){
-                                    console.log('404Moment')
+                                    $('#searchCity').text('')
+                                    $('#searchCity').attr('placeholder', 'Input A Different City')
                                 }
                                 else{
                                     response.json().then(function(data){
@@ -81,7 +78,7 @@ $(document).ready(function(){
                             })
                     } 
                     else{
-                        //put error message
+                        $('#searchCity').attr('placeholder', 'Input A Different City')
                     }
                 })
             })  
