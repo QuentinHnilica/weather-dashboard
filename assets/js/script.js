@@ -57,44 +57,56 @@ $(document).ready(function(){
         });
     }
 
-    function getFetch(){
+    function getFetch(){  
         if (location != ''){
+            console.log(location)
             fetch(cityUrl + location + apiId).then(function(response){
-                response.json().then(function(data){
-                    locationObj = data.coord
-                    if (locationObj != null){
-                        fetch(startURL + 'lat=' + locationObj.lat + '&lon=' + locationObj.lon + apiId)
-                            .then(function(response){
-                                if (response.status === 404){
-                                    $('#searchCity').text('')
-                                    $('#searchCity').attr('placeholder', 'Input A Different City')
-                                }
-                                else{
-                                    response.json().then(function(data){
-                                        displayWeather(data)
-                                    })
-                                }
-                                
-                            })
-                    } 
-                    else{
-                        $('#searchCity').attr('placeholder', 'Input A Different City')
-                    }
-                })
+                console.log(response)
+                if (response.status === 404){
+                    
+                    $('#searchCity').val('')
+                    $('#searchCity').attr('placeholder', 'Input A Different City')
+                }
+                else{
+                    response.json().then(function(data){
+                        locationObj = data.coord
+                        if (locationObj != null){
+                            fetch(startURL + 'lat=' + locationObj.lat + '&lon=' + locationObj.lon + apiId)
+                                .then(function(response){
+                                    console.log(response)
+                                    if (response.status === 404){
+    
+                                        $('#searchCity').text('')
+                                        $('#searchCity').attr('placeholder', 'Input A Different City')
+                                    }
+                                    else{
+                                        response.json().then(function(data){
+                                            displayWeather(data)
+                                        })
+                                    }
+                                })
+                        } 
+                        else{
+                            $('#searchCity').attr('placeholder', 'Input A Different City')
+                        }
+                    })
+                }
+                
+            }).catch(function(error){
+                console.log(error)
             })  
         }   
     }
 
     $('#submitForm').on('submit', function(event){
         event.preventDefault();
-        location = $('.form-control').val()
+        location = $('#searchCity').val()
         getFetch()
     })
 
-    $('.formButton').on('click', function(event){
+    $('.buttonBox .formButton').on('click', function(event){
         location = $(this)[0].innerText
         getFetch()
     })
-
     getFetch()
 })
