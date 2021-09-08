@@ -9,7 +9,7 @@ $(document).ready(function(){
     var tomorrow
     var recentSearch = []
 
-    function KToF(kalvin) 
+    function KToF(kalvin) //api default is in kalvin, so this converts temp to farenhieght
     {
         var kToFahr = (kalvin-273.15) * 1.8 + 32
         var newTemp = kToFahr.toFixed(2)
@@ -40,7 +40,7 @@ $(document).ready(function(){
         $('#uv').text('UV Index: ' + info.current.uvi)
 
         $('.forecastCards').children().each(function(i) { // 5 day forcast cards
-            switch(i){
+            switch(i){ //switch statement for which day
                 case 0:{
                     cardInfo($(this), info.daily[i], i+1)
                     return
@@ -94,7 +94,7 @@ $(document).ready(function(){
             })  
         }   
     }
-    function displayHistory(){
+    function displayHistory(){ //displays text on button from recent searches
         for (var i = 0; i < recentSearch.length; i++){
             if (i > 6){
                 recentSearch[i] = null
@@ -104,7 +104,7 @@ $(document).ready(function(){
         }
     }
 
-    function addToLocal(theLocation){
+    function addToLocal(theLocation){ //adds search to local storage
         for (var i = 0; i < 7; i++){
             if (localStorage.getItem(i) === null){
                 localStorage.setItem(i, theLocation)
@@ -127,16 +127,16 @@ $(document).ready(function(){
         getFetch()
     })
     function getData(){
-        for (var i = 0; i < 7; i++){
+        for (var i = 0; i < 7; i++){ //we only want 6 searches
             if (localStorage.getItem(i) !== null){
                 recentSearch.unshift(localStorage.getItem(i))
             }
             else{
-                break
+                break 
             }
         }
         displayHistory()
     }
-    getData()
+    getData() //local storage
     getFetch() //Sets default page to San Diego 
 })
