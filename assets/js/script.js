@@ -7,23 +7,34 @@ $(document).ready(function(){
     var date = new Date()
     var today = date.toDateString()
     var tomorrow
+    var recentSearch = []
+
+    function KToF(kalvin) 
+    {
+        var kToFahr = (kalvin-273.15) * 1.8 + 32
+        var newTemp = kToFahr.toFixed(2)
+        return newTemp
+    }
 
     function cardInfo(card, info, nextDay) { //displays all the weather properties
         tomorrow = new Date(new Date().setDate(date.getDate() + nextDay))
-
+        var convertTemp = KToF(info.temp.day)
         card.children()[0].innerText = tomorrow.toDateString()
         card.children()[1].setAttribute('src', iconUrl + info.weather[0].icon + '.png')
         card.children()[1].setAttribute('width', '50')
-        card.children()[2].innerText = 'Temp: ' + info.temp.day
+        card.children()[2].innerText = 'Temp: ' + convertTemp + " ℉"
         card.children()[3].innerText = 'Wind: ' + info.wind_speed
         card.children()[4].innerText = 'Humidity: ' + info.humidity
     }
 
+    
+
     function displayWeather(info){ // big box current weather data
+        var realTemp = KToF(info.current.temp)
         $('.area').text(location + ' : ' + today)
         $('.area').append(document.createElement('img'))
         $('.area').children().attr('src', iconUrl + info.current.weather[0].icon + '.png')
-        $('#temp').text('Current Temp: ' + info.current.temp)
+        $('#temp').text('Current Temp: ' + realTemp + "	℉")
         $('#wind').text('Wind Speed: ' + info.current.wind_speed)
         $('#humid').text('Humidity: ' + info.current.humidity)
         $('#uv').text('UV Index: ' + info.current.uvi)
@@ -83,10 +94,31 @@ $(document).ready(function(){
             })  
         }   
     }
+    function displayHistory(){
+        for (var i = 0; i < recentSearch.length; i++){
+            if (i > 6){
+                recentSearch[i] = null
+                break;
+            }
+            $('#' + i)[0].innerText = recentSearch[i]         
+        }
+    }
+
+    function addToLocal(theLocation){
+        for (var i = 0; i < 7; i++){
+            if (localStorage.getItem(i) === null){
+                localStorage.setItem(i, theLocation)
+                return
+            }
+        }
+    }
 
     $('#submitForm').on('submit', function(event){ //Gets location from your input
         event.preventDefault();
         location = $('#searchCity').val()
+        recentSearch.unshift(location)
+        addToLocal(location)
+        displayHistory()
         getFetch()
     })
 
@@ -94,5 +126,17 @@ $(document).ready(function(){
         location = $(this)[0].innerText
         getFetch()
     })
+    function getData(){
+        for (var i = 0; i < 7; i++){
+            if (localStorage.getItem(i) !== null){
+                recentSearch.unshift(localStorage.getItem(i))
+            }
+            else{
+                break
+            }
+        }
+        displayHistory()
+    }
+    getData()
     getFetch() //Sets default page to San Diego 
 })
